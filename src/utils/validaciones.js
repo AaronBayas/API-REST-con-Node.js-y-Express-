@@ -63,4 +63,46 @@ const validarLogin = (body) => {
   return { correo: correo.trim().toLowerCase(), password };
 };
 
-module.exports = { comoObjeto, lanzarSiHayErrores, validarTexto, validarRegistro, validarLogin };
+const PRECIO_MAXIMO = 99999999.99; // límite de NUMERIC(10,2)
+
+const validarPrecio = (detalles, precio) => {
+  // Solo se acepta un número JSON: "10" (texto) es inválido.
+  if (typeof precio !== 'number' || !Number.isFinite(precio) || precio <= 0) {
+    detalles.push({ campo: 'precio', mensaje: 'Debe ser un número mayor que 0' });
+    return;
+  }
+  const centavos = precio * 100;
+  if (Math.abs(centavos - Math.round(centavos)) > 1e-6) {
+    detalles.push({ campo: 'precio', mensaje: 'Admite como máximo 2 decimales' });
+  }
+  if (precio > PRECIO_MAXIMO) {
+    detalles.push({ campo: 'precio', mensaje: `No puede ser mayor que ${PRECIO_MAXIMO}` });
+  }
+};
+
+// Producto: lista blanca nombre/descripcion/categoria/precio; cualquier otro campo se ignora.
+const validarProducto = (body) => {
+  const { nombre, descripcion, categoria, precio } = comoObjeto(body);
+  const detalles = [];
+
+  const datos = {
+    nombre: validarTexto(detalles, 'nombre', nombre, 2, 120),
+    descripcion: validarTexto(detalles, 'descripcion', descripcion, 1, 500),
+    categoria: validarTexto(detalles, 'categoria', categoria, 2, 60),
+    precio,
+  };
+  validarPrecio(detalles, precio);
+
+  lanzarSiHayErrores(detalles);
+  datos.categoria = datos.categoria.toLowerCase();
+  return datos;
+};
+
+module.exports = {
+  comoObjeto,
+  lanzarSiHayErrores,
+  validarTexto,
+  validarRegistro,
+  validarLogin,
+  validarProducto,
+};

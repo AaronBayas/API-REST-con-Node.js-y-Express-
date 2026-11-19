@@ -1,6 +1,9 @@
 // Pool de conexiones. pg toma PGHOST, PGPORT, PGUSER, PGPASSWORD y PGDATABASE del entorno.
 require('./env');
-const { Pool } = require('pg');
+const { Pool, types } = require('pg');
+
+// pg devuelve NUMERIC como texto; el precio (NUMERIC(10,2)) se entrega como número en el JSON.
+types.setTypeParser(types.builtins.NUMERIC, (valor) => (valor === null ? null : Number(valor)));
 
 const pool = new Pool();
 
