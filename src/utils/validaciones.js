@@ -98,6 +98,15 @@ const validarProducto = (body) => {
   return datos;
 };
 
+// Identificador de producto que llega en el cuerpo (favoritos).
+const validarProductoId = (body) => {
+  const { productoId } = comoObjeto(body);
+  if (!Number.isInteger(productoId) || productoId <= 0 || productoId > 2147483647) {
+    lanzarSiHayErrores([{ campo: 'productoId', mensaje: 'Debe ser un número entero positivo' }]);
+  }
+  return productoId;
+};
+
 module.exports = {
   comoObjeto,
   lanzarSiHayErrores,
@@ -105,4 +114,5 @@ module.exports = {
   validarRegistro,
   validarLogin,
   validarProducto,
+  validarProductoId,
 };
