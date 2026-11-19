@@ -4,3 +4,4 @@ postman/entorno.local.json
 docs/evidencias/newman/
 *.log
 .DS_Store
+.vscode/
