@@ -1,0 +1,18 @@
+# Opcional: PostgreSQL local para quien no lo tenga instalado.
+# Uso: docker compose up -d   (toma usuario, contraseña y BD del archivo .env)
+services:
+  postgres:
+    image: postgres:16
+    container_name: catalogo_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_DB: ${PGDATABASE:-catalogo_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

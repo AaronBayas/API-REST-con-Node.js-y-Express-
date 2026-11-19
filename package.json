@@ -1,0 +1,43 @@
+{
+  "name": "catalogo-api",
+  "version": "1.0.0",
+  "description": "API REST de catálogo de productos con favoritos y roles",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "db:init": "node scripts/init-db.js",
+    "db:admin": "node scripts/crear-admin.js",
+    "token:vencido": "node scripts/generar-token-vencido.js",
+    "test:api": "newman run postman/Catalogo_API.postman_collection.json -e postman/entorno.local.json --export-environment postman/entorno.local.json -r cli,htmlextra --reporter-htmlextra-export docs/evidencias/newman/reporte.html --reporter-htmlextra-skipHeaders Authorization",
+    "test:e2e": "node scripts/e2e-persistencia.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AaronBayas/API-REST-con-Node.js-y-Express-.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/AaronBayas/API-REST-con-Node.js-y-Express-/issues"
+  },
+  "homepage": "https://github.com/AaronBayas/API-REST-con-Node.js-y-Express-#readme",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.23.1"
+  },
+  "devDependencies": {
+    "newman": "^6.2.3",
+    "newman-reporter-htmlextra": "^1.23.1",
+    "nodemon": "^3.1.14"
+  }
+}
