@@ -9,7 +9,7 @@
     "db:init": "node scripts/init-db.js",
     "db:admin": "node scripts/crear-admin.js",
     "token:vencido": "node scripts/generar-token-vencido.js",
-    "test:api": "newman run postman/Catalogo_API.postman_collection.json -e postman/entorno.local.json --export-environment postman/entorno.local.json -r cli,htmlextra --reporter-htmlextra-export docs/evidencias/newman/reporte.html --reporter-htmlextra-skipHeaders Authorization",
+    "test:api": "newman run postman/Catalogo_API.postman_collection.json -e postman/entorno.local.json --export-environment postman/entorno.local.json -r cli,htmlextra --reporter-htmlextra-export docs/evidencias/newman/reporte.html --reporter-htmlextra-skipHeaders Authorization --reporter-htmlextra-hideRequestBody \"01.8 Login administrador\" --reporter-htmlextra-hideResponseBody \"01.6 Login usuario A,01.7 Login usuario B,01.8 Login administrador,08.1 (tras reiniciar) Login A\"",
     "test:e2e": "node scripts/e2e-persistencia.js"
   },
   "repository": {
